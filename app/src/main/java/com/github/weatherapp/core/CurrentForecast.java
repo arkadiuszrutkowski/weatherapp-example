@@ -12,7 +12,7 @@ public class CurrentForecast {
     public List<Weather> weatherList;
 
     @SerializedName("main")
-    public Main main;
+    public WeatherData weatherData;
 
     @SerializedName("sys")
     public Country country;

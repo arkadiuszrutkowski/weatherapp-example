@@ -10,7 +10,7 @@ public class Weather {
     @Override
     public String toString() {
         return "Weather{" +
-                "main='" + main + '\'' +
+                "weatherData='" + main + '\'' +
                 ", icon='" + icon + '\'' +
                 ", description='" + description + '\'' +
                 '}';

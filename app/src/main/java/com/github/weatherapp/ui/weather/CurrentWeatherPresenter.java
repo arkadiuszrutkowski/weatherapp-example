@@ -2,8 +2,8 @@ package com.github.weatherapp.ui.weather;
 
 import com.github.weatherapp.core.CurrentForecast;
 import com.github.weatherapp.core.WeatherService;
-import com.github.weatherapp.ui.resource.MessageResourceProvider;
 import com.github.weatherapp.ui.base.BasePresenter;
+import com.github.weatherapp.ui.resource.MessageResourceProvider;
 
 import javax.inject.Inject;
 

@@ -19,6 +19,6 @@ public class AndroidMessageResourceProvider implements MessageResourceProvider {
 
     @Override
     public String getTemperatureDescription(CurrentForecast forecast) {
-        return context.getString(R.string.temperature, Double.valueOf(forecast.main.temp).intValue());
+        return context.getString(R.string.temperature, Double.valueOf(forecast.weatherData.temp).intValue());
     }
 }
