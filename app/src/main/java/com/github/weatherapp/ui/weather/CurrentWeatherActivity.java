@@ -1,7 +1,6 @@
-package com.github.weatherapp.ui.main;
+package com.github.weatherapp.ui.weather;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -21,8 +20,8 @@ import com.github.weatherapp.injection.scope.ActivityScope;
 import com.github.weatherapp.ui.WeatherApp;
 import com.github.weatherapp.ui.base.BaseActivity;
 
-public class MainActivity extends BaseActivity<MainView, MainPresenter> implements MainView {
-    private static final String TAG = MainActivity.class.getSimpleName();
+public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherView, CurrentWeatherPresenter> implements CurrentWeatherView {
+    private static final String TAG = CurrentWeatherActivity.class.getSimpleName();
 
     private EditText cityEditText;
     private TextView cityNameTextView;
@@ -60,30 +59,30 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
     }
 
     @Override
-    public void updateCurrentForecast(CurrentForecast forecast) {
-        Log.d(TAG, forecast.toString());
-        cityNameTextView.setText(getString(R.string.text_city_country, forecast.city, forecast.country.country));
-        temperatureTextView.setText(getString(R.string.temperature, (int) forecast.main.temp));
-        Glide.with(MainActivity.this)
-                .load("http://openweathermap.org/img/w/" + forecast.weatherList.get(0).icon + ".png")
+    public void updateCurrentForecast(CurrentWeatherViewModel model) {
+        Log.d(TAG, model.toString());
+        cityNameTextView.setText(model.getCityName());
+        temperatureTextView.setText(model.getTemperature());
+        Glide.with(this)
+                .load(model.getWeatherIconPath())
                 .into((ImageView) findViewById(R.id.image_weather_icon));
     }
 
     @Override
     public void updateErrorMessage(String message) {
-        new AlertDialog.Builder(MainActivity.this)
+        new AlertDialog.Builder(CurrentWeatherActivity.this)
                 .setTitle("Oops!")
                 .setMessage("Something went wrong...")
                 .show();
     }
 
     @Override
-    protected MainPresenter newPresenter() {
+    protected CurrentWeatherPresenter newPresenter() {
         return getComponent().presenter();
     }
 
     @Override
-    protected MainView getPresenterView() {
+    protected CurrentWeatherView getPresenterView() {
         return this;
     }
 
@@ -103,7 +102,7 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
 
     private Component getComponent() {
         if (component == null) {
-            component = DaggerMainActivity_Component.builder()
+            component = DaggerCurrentWeatherActivity_Component.builder()
                     .appComponent(WeatherApp.get(this).getAppComponent())
                     .build();
         }
@@ -113,6 +112,6 @@ public class MainActivity extends BaseActivity<MainView, MainPresenter> implemen
     @ActivityScope
     @dagger.Component(dependencies = AppComponent.class)
     public interface Component {
-        MainPresenter presenter();
+        CurrentWeatherPresenter presenter();
     }
 }
