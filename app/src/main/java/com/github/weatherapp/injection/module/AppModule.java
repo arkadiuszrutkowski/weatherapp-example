@@ -5,6 +5,8 @@ import android.content.Context;
 import com.github.weatherapp.core.WeatherService;
 import com.github.weatherapp.data.OpenWeatherApi;
 import com.github.weatherapp.data.OpenWeatherService;
+import com.github.weatherapp.ui.resource.AndroidMessageResourceProvider;
+import com.github.weatherapp.ui.resource.MessageResourceProvider;
 
 import javax.inject.Singleton;
 
@@ -23,5 +25,11 @@ public class AppModule {
     @Singleton
     Context provideAppContext() {
         return appContext;
+    }
+
+    @Provides
+    @Singleton
+    static MessageResourceProvider provideMessageResourceProvider(Context context) {
+        return new AndroidMessageResourceProvider(context);
     }
 }
