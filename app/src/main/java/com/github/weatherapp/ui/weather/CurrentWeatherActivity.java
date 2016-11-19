@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.weatherapp.R;
-import com.github.weatherapp.core.CurrentForecast;
 import com.github.weatherapp.injection.component.AppComponent;
 import com.github.weatherapp.injection.scope.ActivityScope;
 import com.github.weatherapp.ui.WeatherApp;
