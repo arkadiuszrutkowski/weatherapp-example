@@ -2,9 +2,6 @@ package com.github.weatherapp.injection.module;
 
 import android.content.Context;
 
-import com.github.weatherapp.core.WeatherService;
-import com.github.weatherapp.data.OpenWeatherApi;
-import com.github.weatherapp.data.OpenWeatherService;
 import com.github.weatherapp.ui.resource.AndroidMessageResourceProvider;
 import com.github.weatherapp.ui.resource.MessageResourceProvider;
 
@@ -13,6 +10,9 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
+/*
+    Android specific application module
+ */
 @Module
 public class AppModule {
     private final Context appContext;
@@ -23,13 +23,13 @@ public class AppModule {
 
     @Provides
     @Singleton
-    Context provideAppContext() {
-        return appContext;
+    static MessageResourceProvider provideMessageResourceProvider(Context context) {
+        return new AndroidMessageResourceProvider(context);
     }
 
     @Provides
     @Singleton
-    static MessageResourceProvider provideMessageResourceProvider(Context context) {
-        return new AndroidMessageResourceProvider(context);
+    Context provideAppContext() {
+        return appContext;
     }
 }

@@ -1,6 +1,7 @@
 package com.github.weatherapp.ui.base;
 
-import android.content.Context;
-
+/*
+    Just base interface for dispatching MVP views
+ */
 public interface BaseView {
 }

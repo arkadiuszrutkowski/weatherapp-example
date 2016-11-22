@@ -2,7 +2,6 @@ package com.github.weatherapp.ui.weather;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -29,11 +28,39 @@ public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherView, Cur
     private Component component;
 
     @Override
+    public void updateCurrentForecast(CurrentWeatherViewModel model) {
+        Log.d(TAG, model.toString());
+        cityNameTextView.setText(model.getCityName());
+        temperatureTextView.setText(model.getTemperature());
+        Glide.with(this)
+                .load(model.getWeatherIconPath())
+                .into((ImageView) findViewById(R.id.image_weather_icon));
+    }
+
+    @Override
+    public void updateErrorMessage(String message) {
+        new AlertDialog.Builder(CurrentWeatherActivity.this)
+                .setTitle("Oops!")
+                .setMessage("Something went wrong...")
+                .show();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         initViews();
+    }
+
+    @Override
+    protected CurrentWeatherPresenter newPresenter() {
+        return getComponent().presenter();
+    }
+
+    @Override
+    protected CurrentWeatherView getPresenterView() {
+        return this;
     }
 
     private void initViews() {
@@ -57,46 +84,16 @@ public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherView, Cur
         });
     }
 
-    @Override
-    public void updateCurrentForecast(CurrentWeatherViewModel model) {
-        Log.d(TAG, model.toString());
-        cityNameTextView.setText(model.getCityName());
-        temperatureTextView.setText(model.getTemperature());
-        Glide.with(this)
-                .load(model.getWeatherIconPath())
-                .into((ImageView) findViewById(R.id.image_weather_icon));
-    }
-
-    @Override
-    public void updateErrorMessage(String message) {
-        new AlertDialog.Builder(CurrentWeatherActivity.this)
-                .setTitle("Oops!")
-                .setMessage("Something went wrong...")
-                .show();
-    }
-
-    @Override
-    protected CurrentWeatherPresenter newPresenter() {
-        return getComponent().presenter();
-    }
-
-    @Override
-    protected CurrentWeatherView getPresenterView() {
-        return this;
-    }
-
     private boolean onEditorActionCityEditText(int actionId) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            String unit = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString("PREFERENCE_UNIT", "metric");
-            presenter.showCurrentForecast(cityEditText.getText().toString(), unit);
+            presenter.showCurrentForecast(cityEditText.getText().toString(), "metric");
             return true;
         }
         return false;
     }
 
     private void onClickSearchButton() {
-        String unit = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString("PREFERENCE_UNIT", "metric");
-        presenter.showCurrentForecast(cityEditText.getText().toString(), unit);
+        presenter.showCurrentForecast(cityEditText.getText().toString(), "metric");
     }
 
     private Component getComponent() {

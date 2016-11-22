@@ -10,6 +10,9 @@ import dagger.Module;
 import dagger.Provides;
 import retrofit2.Retrofit;
 
+/*
+    Open Weather Map API module
+ */
 @Module
 public class OpenWeatherApiModule {
     private final String apiKey;

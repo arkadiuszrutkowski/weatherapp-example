@@ -19,7 +19,6 @@ public class WeatherApp extends Application {
 
     public AppComponent getAppComponent() {
         if (appComponent == null) initAppComponent();
-
         return appComponent;
     }
 

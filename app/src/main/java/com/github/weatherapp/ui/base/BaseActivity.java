@@ -2,23 +2,29 @@ package com.github.weatherapp.ui.base;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
+/*
+    Base activity handling presenter's lifecycle
+ */
 public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V>> extends AppCompatActivity
         implements BaseView {
 
     protected P presenter;
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance() {
+        return presenter;
+    }
 
     @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Check for retained presenter
+        // Check for persisting presenter
         if (getLastCustomNonConfigurationInstance() != null) {
             presenter = (P) getLastCustomNonConfigurationInstance();
-        } else  {
-            Log.d("BaseActivity", "newPresenter");
+        } else {
             presenter = newPresenter();
         }
 
@@ -29,12 +35,6 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     protected void onDestroy() {
         presenter.detach();
         super.onDestroy();
-    }
-
-    @Override
-    public Object onRetainCustomNonConfigurationInstance() {
-        Log.d("BaseActivity", "onRetainCustomNonConfigurationInstance");
-        return presenter;
     }
 
     protected abstract P newPresenter();

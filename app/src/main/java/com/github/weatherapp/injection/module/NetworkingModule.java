@@ -10,12 +10,33 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/*
+    Module for general purpose networking
+ */
 @Module
 public class NetworkingModule {
     private final String apiUrl;
 
     public NetworkingModule(String apiUrl) {
         this.apiUrl = apiUrl;
+    }
+
+    /*
+        Custom configured Gson instance. Feel free to change!
+     */
+    @Provides
+    @Singleton
+    static Gson provideGson() {
+        return new Gson();
+    }
+
+    /*
+        Custom configured OkHttpClient instance. Feel free to change!
+     */
+    @Provides
+    @Singleton
+    static OkHttpClient provideOkHttpClient() {
+        return new OkHttpClient();
     }
 
     @Provides
@@ -26,17 +47,5 @@ public class NetworkingModule {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
-    }
-
-    @Provides
-    @Singleton
-    static Gson provideGson() {
-        return new Gson();
-    }
-
-    @Provides
-    @Singleton
-    static OkHttpClient provideOkHttpClient() {
-        return new OkHttpClient();
     }
 }
