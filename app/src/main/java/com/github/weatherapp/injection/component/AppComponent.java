@@ -1,5 +1,6 @@
 package com.github.weatherapp.injection.component;
 
+import com.github.weatherapp.core.AppSettings;
 import com.github.weatherapp.core.WeatherService;
 import com.github.weatherapp.ui.resource.MessageResourceProvider;
 import com.github.weatherapp.injection.module.AppModule;
@@ -16,4 +17,6 @@ public interface AppComponent {
     WeatherService weatherService();
 
     MessageResourceProvider messageResourceProvider();
+
+    AppSettings appSettings();
 }

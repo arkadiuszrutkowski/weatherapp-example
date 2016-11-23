@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.weatherapp.R;
+import com.github.weatherapp.core.AppSettings;
 import com.github.weatherapp.injection.component.AppComponent;
 import com.github.weatherapp.injection.scope.ActivityScope;
 import com.github.weatherapp.ui.WeatherApp;
@@ -87,7 +88,7 @@ public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherView, Cur
 
     private boolean onEditorActionCityEditText(int actionId) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            String unit = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString("PREFERENCE_UNIT", "metric");
+            String unit = component.appSettings().getMetricUnit();
             presenter.showCurrentForecast(cityEditText.getText().toString(), unit);
             return true;
         }
@@ -112,5 +113,7 @@ public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherView, Cur
     @dagger.Component(dependencies = AppComponent.class)
     public interface Component {
         CurrentWeatherPresenter presenter();
+
+        AppSettings appSettings();
     }
 }
