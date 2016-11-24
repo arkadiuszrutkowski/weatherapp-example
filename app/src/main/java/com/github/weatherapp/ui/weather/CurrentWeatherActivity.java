@@ -87,12 +87,8 @@ public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherView, Cur
 
     private boolean onEditorActionCityEditText(int actionId) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-<<<<<<< HEAD
             String unit = component.appSettings().getMetricUnit();
             presenter.showCurrentForecast(cityEditText.getText().toString(), unit);
-=======
-            presenter.showCurrentForecast(cityEditText.getText().toString(), "metric");
->>>>>>> bc85b6a04cfd268516fe7b302cb2802dcd658541
             return true;
         }
         return false;
