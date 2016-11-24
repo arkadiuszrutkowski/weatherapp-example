@@ -1,5 +1,8 @@
 package com.github.weatherapp.ui.base;
 
+/*
+    Basic presenter functionality
+ */
 public class BasePresenter<V extends BaseView> {
     private V view;
 

@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+<<<<<<< HEAD
 import com.github.weatherapp.core.AppSettings;
 import com.github.weatherapp.data.SharedPrefsAppSettings;
+=======
+>>>>>>> bc85b6a04cfd268516fe7b302cb2802dcd658541
 import com.github.weatherapp.ui.resource.AndroidMessageResourceProvider;
 import com.github.weatherapp.ui.resource.MessageResourceProvider;
 
@@ -14,6 +17,9 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
+/*
+    Android specific application module
+ */
 @Module
 public class AppModule {
     private final Context appContext;
@@ -24,14 +30,14 @@ public class AppModule {
 
     @Provides
     @Singleton
-    Context provideAppContext() {
-        return appContext;
+    static MessageResourceProvider provideMessageResourceProvider(Context context) {
+        return new AndroidMessageResourceProvider(context);
     }
 
     @Provides
     @Singleton
-    static MessageResourceProvider provideMessageResourceProvider(Context context) {
-        return new AndroidMessageResourceProvider(context);
+    Context provideAppContext() {
+        return appContext;
     }
 
     @Provides
