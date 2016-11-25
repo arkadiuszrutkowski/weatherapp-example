@@ -1,9 +1,12 @@
 package com.github.weatherapp.ui.weather;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -18,6 +21,7 @@ import com.github.weatherapp.injection.component.AppComponent;
 import com.github.weatherapp.injection.scope.ActivityScope;
 import com.github.weatherapp.ui.WeatherApp;
 import com.github.weatherapp.ui.base.BaseActivity;
+import com.github.weatherapp.ui.settings.SettingsActivity;
 
 public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherView, CurrentWeatherPresenter> implements CurrentWeatherView {
     private static final String TAG = CurrentWeatherActivity.class.getSimpleName();
@@ -52,6 +56,23 @@ public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherView, Cur
         setContentView(R.layout.activity_main);
 
         initViews();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.weather, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
+        }
+
+        return true;
     }
 
     @Override
