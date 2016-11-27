@@ -3,6 +3,9 @@ package com.github.weatherapp.ui.base;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.github.weatherapp.injection.component.AppComponent;
+import com.github.weatherapp.ui.WeatherApp;
+
 /*
     Base activity handling presenter's lifecycle
  */
@@ -35,6 +38,10 @@ public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V
     protected void onDestroy() {
         presenter.detach();
         super.onDestroy();
+    }
+
+    protected AppComponent getAppComponent() {
+        return WeatherApp.get(this).getAppComponent();
     }
 
     protected abstract P newPresenter();

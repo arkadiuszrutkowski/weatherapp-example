@@ -19,7 +19,6 @@ import com.github.weatherapp.R;
 import com.github.weatherapp.core.AppSettings;
 import com.github.weatherapp.injection.component.AppComponent;
 import com.github.weatherapp.injection.scope.ActivityScope;
-import com.github.weatherapp.ui.WeatherApp;
 import com.github.weatherapp.ui.base.BaseActivity;
 import com.github.weatherapp.ui.settings.SettingsActivity;
 
@@ -122,7 +121,7 @@ public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherView, Cur
     private Component getComponent() {
         if (component == null) {
             component = DaggerCurrentWeatherActivity_Component.builder()
-                    .appComponent(WeatherApp.get(this).getAppComponent())
+                    .appComponent(getAppComponent())
                     .build();
         }
         return component;
