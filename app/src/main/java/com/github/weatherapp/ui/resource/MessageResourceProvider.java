@@ -6,4 +6,6 @@ public interface MessageResourceProvider {
     String getCityDescription(CurrentForecast forecast);
 
     String getTemperatureDescription(CurrentForecast forecast);
+
+    String getMetricUnitDescription(String metricUnit);
 }

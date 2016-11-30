@@ -1,8 +1,8 @@
 package com.github.weatherapp.ui.weather;
 
-import com.github.weatherapp.ui.base.BaseView;
+import com.github.weatherapp.ui.base.BaseMvpView;
 
-interface CurrentWeatherView extends BaseView {
+interface CurrentWeatherMvpView extends BaseMvpView {
 
     void updateCurrentForecast(CurrentWeatherViewModel model);
 

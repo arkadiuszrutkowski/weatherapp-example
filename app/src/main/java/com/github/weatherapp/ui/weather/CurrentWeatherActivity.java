@@ -22,7 +22,7 @@ import com.github.weatherapp.injection.scope.ActivityScope;
 import com.github.weatherapp.ui.base.BaseActivity;
 import com.github.weatherapp.ui.settings.SettingsActivity;
 
-public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherView, CurrentWeatherPresenter> implements CurrentWeatherView {
+public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherMvpView, CurrentWeatherMvpPresenter> implements CurrentWeatherMvpView {
     private static final String TAG = CurrentWeatherActivity.class.getSimpleName();
 
     private EditText cityEditText;
@@ -75,12 +75,12 @@ public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherView, Cur
     }
 
     @Override
-    protected CurrentWeatherPresenter newPresenter() {
+    protected CurrentWeatherMvpPresenter newPresenter() {
         return getComponent().presenter();
     }
 
     @Override
-    protected CurrentWeatherView getPresenterView() {
+    protected CurrentWeatherMvpView getPresenterView() {
         return this;
     }
 
@@ -130,7 +130,7 @@ public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherView, Cur
     @ActivityScope
     @dagger.Component(dependencies = AppComponent.class)
     public interface Component {
-        CurrentWeatherPresenter presenter();
+        CurrentWeatherMvpPresenter presenter();
 
         AppSettings appSettings();
     }

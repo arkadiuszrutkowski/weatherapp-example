@@ -9,8 +9,8 @@ import com.github.weatherapp.ui.WeatherApp;
 /*
     Base activity handling presenter's lifecycle
  */
-public abstract class BaseActivity<V extends BaseView, P extends BasePresenter<V>> extends AppCompatActivity
-        implements BaseView {
+public abstract class BaseActivity<V extends BaseMvpView, P extends BaseMvpPresenter<V>> extends AppCompatActivity
+        implements BaseMvpView {
 
     protected P presenter;
 

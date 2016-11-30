@@ -3,20 +3,20 @@ package com.github.weatherapp.ui.weather;
 import com.github.weatherapp.core.CurrentForecast;
 import com.github.weatherapp.core.WeatherService;
 import com.github.weatherapp.injection.scope.ActivityScope;
-import com.github.weatherapp.ui.base.BasePresenter;
+import com.github.weatherapp.ui.base.BaseMvpPresenter;
 import com.github.weatherapp.ui.resource.MessageResourceProvider;
 
 import javax.inject.Inject;
 
 @ActivityScope
-class CurrentWeatherPresenter extends BasePresenter<CurrentWeatherView> {
+class CurrentWeatherMvpPresenter extends BaseMvpPresenter<CurrentWeatherMvpView> {
     private static final String WEATHER_ICON_URL_FORMAT = "http://openweathermap.org/img/w/%s.png";
 
     private final WeatherService service;
     private final MessageResourceProvider provider;
 
     @Inject
-    CurrentWeatherPresenter(WeatherService service, MessageResourceProvider provider) {
+    CurrentWeatherMvpPresenter(WeatherService service, MessageResourceProvider provider) {
         this.service = service;
         this.provider = provider;
     }

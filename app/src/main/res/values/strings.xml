@@ -1,10 +1,10 @@
 <resources>
-    <array name="temperature_units">
+    <array name="temperature_unit_descriptions">
         <item>Celsius</item>
         <item>Fahrenheit</item>
         <item>Kelvin</item>
     </array>
-    <array name="temperature_values">
+    <array name="temperature_unit_values">
         <item>metric</item>
         <item>imperial</item>
         <item>standard</item>

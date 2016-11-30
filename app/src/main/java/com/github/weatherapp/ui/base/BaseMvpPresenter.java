@@ -3,7 +3,7 @@ package com.github.weatherapp.ui.base;
 /*
     Basic presenter functionality
  */
-public class BasePresenter<V extends BaseView> {
+public class BaseMvpPresenter<V extends BaseMvpView> {
     private V view;
 
     public void attach(V view) {
