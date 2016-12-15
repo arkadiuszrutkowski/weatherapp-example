@@ -6,8 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import com.github.weatherapp.injection.component.AppComponent;
 import com.github.weatherapp.ui.WeatherApp;
 
-/*
-    Base activity handling presenter's lifecycle
+/**
+ * Base activity for handling presenter's lifecycle and provides some utilities like Dagger components.
+ * @param <V>
+ * @param <P>
  */
 public abstract class BaseActivity<V extends BaseMvpView, P extends BaseMvpPresenter<V>> extends AppCompatActivity
         implements BaseMvpView {

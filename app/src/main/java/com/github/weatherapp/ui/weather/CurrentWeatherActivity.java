@@ -22,6 +22,9 @@ import com.github.weatherapp.injection.scope.ActivityScope;
 import com.github.weatherapp.ui.base.BaseActivity;
 import com.github.weatherapp.ui.settings.SettingsActivity;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherMvpView, CurrentWeatherMvpPresenter> implements CurrentWeatherMvpView {
     private static final String TAG = CurrentWeatherActivity.class.getSimpleName();
 
@@ -30,6 +33,8 @@ public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherMvpView, 
     private TextView temperatureTextView;
 
     private Component component;
+
+    private Unbinder unbinder;
 
     @Override
     public void updateCurrentForecast(CurrentWeatherViewModel model) {
@@ -54,7 +59,14 @@ public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherMvpView, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        unbinder = ButterKnife.bind(this);
         initViews();
+    }
+
+    @Override
+    protected void onDestroy() {
+        unbinder.unbind();
+        super.onDestroy();
     }
 
     @Override
