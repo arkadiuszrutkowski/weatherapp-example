@@ -1,0 +1,35 @@
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+
+ext {
+    androidCompileSdkVersion = 25
+    androidBuildToolsVersion = "25.0.2"
+    androidMinSdkVersion = 16
+    androidTargetSdkVersion = 24
+    androidVersionCode = 1
+    androidVersionName = "1.0"
+
+    // Java compatibility
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+
+    daggerVersion = "2.8"
+    javaxAnnotationVersion = "1.0"
+    butterKnifeVersion = "8.4.0"
+    supportLibraryVersion = "25.1.0"
+    retrofitVersion = "2.1.0"
+    okHttpVersion = "3.5.0"
+
+    appDependencies = [
+            dagger                 : "com.google.dagger:dagger:${daggerVersion}",
+            daggerCompiler         : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            javaxAnnotation        : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
+            butterKnife            : "com.jakewharton:butterknife:${butterKnifeVersion}",
+            butterKnifeCompiler    : "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
+            design                 : "com.android.support:design:${supportLibraryVersion}",
+            appCompatv7            : "com.android.support:appcompat-v7:${supportLibraryVersion}"
+    ]
+}
