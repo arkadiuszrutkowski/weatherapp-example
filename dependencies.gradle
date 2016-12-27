@@ -16,6 +16,9 @@ ext {
     sourceCompatibility = JavaVersion.VERSION_1_7
     targetCompatibility = JavaVersion.VERSION_1_7
 
+    // Kotlin
+    kotlinVersion = "1.0.5-2"
+
     daggerVersion = "2.8"
     javaxAnnotationVersion = "1.0"
     butterKnifeVersion = "8.4.0"
@@ -24,12 +27,12 @@ ext {
     okHttpVersion = "3.5.0"
 
     appDependencies = [
-            dagger                 : "com.google.dagger:dagger:${daggerVersion}",
-            daggerCompiler         : "com.google.dagger:dagger-compiler:${daggerVersion}",
-            javaxAnnotation        : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
-            butterKnife            : "com.jakewharton:butterknife:${butterKnifeVersion}",
-            butterKnifeCompiler    : "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
-            design                 : "com.android.support:design:${supportLibraryVersion}",
-            appCompatv7            : "com.android.support:appcompat-v7:${supportLibraryVersion}"
+            dagger             : "com.google.dagger:dagger:${daggerVersion}",
+            daggerCompiler     : "com.google.dagger:dagger-compiler:${daggerVersion}",
+            javaxAnnotation    : "javax.annotation:jsr250-api:${javaxAnnotationVersion}",
+            butterKnife        : "com.jakewharton:butterknife:${butterKnifeVersion}",
+            butterKnifeCompiler: "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
+            design             : "com.android.support:design:${supportLibraryVersion}",
+            appCompatv7        : "com.android.support:appcompat-v7:${supportLibraryVersion}"
     ]
 }
