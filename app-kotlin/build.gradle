@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.androidCompileSdkVersion
@@ -15,24 +16,55 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "WEATHER_APP_ID", "\"${getOpenWeatherMapApiKey()}\""
+        }
+
         release {
-            minifyEnabled false
+            minifyEnabled true
+            buildConfigField "String", "WEATHER_APP_ID", "\"${getOpenWeatherMapApiKey()}\""
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
 }
 
+def getOpenWeatherMapApiKey() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    return properties.getProperty('weatherApiKey')
+}
+
+kapt {
+    generateStubs = true
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    compile 'com.jakewharton:butterknife:8.4.0'
+    kapt 'com.jakewharton:butterknife-compiler:8.4.0'
+
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+
+    kapt 'com.google.dagger:dagger-compiler:2.8'
+    compile 'com.google.dagger:dagger:2.8'
+
+    compile 'com.android.support:appcompat-v7:25.1.0'
+
+    testCompile 'junit:junit:4.12'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    testCompile 'junit:junit:4.12'
+
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 }
 repositories {

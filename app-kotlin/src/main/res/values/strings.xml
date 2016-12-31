@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">Weather App (Kotlin)</string>
+    <array name="temperature_unit_descriptions">
+        <item>Celsius</item>
+        <item>Fahrenheit</item>
+        <item>Kelvin</item>
+    </array>
+    <array name="temperature_unit_values">
+        <item>metric</item>
+        <item>imperial</item>
+        <item>standard</item>
+    </array>
+    <string name="app_name">Weather App</string>
+    <string name="hint_enter_the_city_name">Enter city name</string>
+    <string name="text_city_country">%1$s, %2$s</string>
+    <string name="temperature">%1$d °</string>
+    <string name="app_settings">App Settings</string>
 </resources>
