@@ -18,7 +18,7 @@ public class SharedPrefsAppSettings implements AppSettings {
     }
 
     @Override
-    public void saveMetricUnit(String unit) {
+    public void setMetricUnit(String unit) {
         preferences.edit()
                 .putString(KEY_METRIC, unit)
                 .apply();

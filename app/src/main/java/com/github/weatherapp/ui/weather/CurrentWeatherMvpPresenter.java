@@ -1,5 +1,6 @@
 package com.github.weatherapp.ui.weather;
 
+import com.github.weatherapp.core.AppSettings;
 import com.github.weatherapp.core.CurrentForecast;
 import com.github.weatherapp.core.WeatherService;
 import com.github.weatherapp.injection.scope.ActivityScope;
@@ -14,14 +15,16 @@ class CurrentWeatherMvpPresenter extends BaseMvpPresenter<CurrentWeatherMvpView>
 
     private final WeatherService service;
     private final MessageResourceProvider provider;
+    private final AppSettings appSettings;
 
     @Inject
-    CurrentWeatherMvpPresenter(WeatherService service, MessageResourceProvider provider) {
+    CurrentWeatherMvpPresenter(WeatherService service, MessageResourceProvider provider, AppSettings appSettings) {
         this.service = service;
         this.provider = provider;
+        this.appSettings = appSettings;
     }
 
-    void showCurrentForecast(String city, String unit) {
+    void showCurrentForecast(String city) {
         service.fetchCurrentForecast(new WeatherService.Listener() {
             @Override
             public void onResult(CurrentForecast forecast) {
@@ -39,6 +42,6 @@ class CurrentWeatherMvpPresenter extends BaseMvpPresenter<CurrentWeatherMvpView>
                     getView().updateErrorMessage(throwable.getMessage());
                 }
             }
-        }, city, unit);
+        }, city, appSettings.getMetricUnit());
     }
 }

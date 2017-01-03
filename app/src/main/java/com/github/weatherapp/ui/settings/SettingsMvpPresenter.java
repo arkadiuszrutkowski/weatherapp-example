@@ -27,7 +27,7 @@ class SettingsMvpPresenter extends BaseMvpPresenter<SettingsMvpView> {
     }
     
     void updateMetricUnit(String unit) {
-        appSettings.saveMetricUnit(unit);
+        appSettings.setMetricUnit(unit);
         showAppSettings();
     }
 }

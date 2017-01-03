@@ -1,5 +1,6 @@
 package com.github.weatherapp.ui.weather
 
+import com.github.weatherapp.core.AppSettings
 import com.github.weatherapp.core.CurrentForecast
 import com.github.weatherapp.core.WeatherService
 import com.github.weatherapp.injection.scope.ActivityScope
@@ -8,11 +9,16 @@ import com.github.weatherapp.ui.resource.MessageResourceProvider
 
 import javax.inject.Inject
 
-@ActivityScope class CurrentWeatherMvpPresenter
-@Inject
-constructor(private val service: WeatherService, private val provider: MessageResourceProvider) : BaseMvpPresenter<CurrentWeatherMvpView>() {
+@ActivityScope
+class CurrentWeatherMvpPresenter
 
-    fun showCurrentForecast(city: String, unit: String) {
+@Inject
+constructor(
+        private val service: WeatherService,
+        private val provider: MessageResourceProvider,
+        private val appSettings: AppSettings) : BaseMvpPresenter<CurrentWeatherMvpView>() {
+
+    fun showCurrentForecast(city: String) {
         service.fetchCurrentForecast(object : WeatherService.Listener {
             override fun onResult(forecast: CurrentForecast) {
                     view?.updateCurrentForecast(CurrentWeatherViewModel(
@@ -24,7 +30,7 @@ constructor(private val service: WeatherService, private val provider: MessageRe
             override fun onError(throwable: Throwable) {
                     view?.updateErrorMessage(throwable.message!!)
             }
-        }, city, unit)
+        }, city, appSettings.metricUnit)
     }
 
     companion object {

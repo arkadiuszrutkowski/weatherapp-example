@@ -49,7 +49,7 @@ class NetworkingModule(private val apiUrl: String) {
     @Singleton
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         val logging = HttpLoggingInterceptor()
-        logging.setLevel(HttpLoggingInterceptor.Level.BASIC)
+        logging.level = HttpLoggingInterceptor.Level.BASIC
         return logging
     }
 }

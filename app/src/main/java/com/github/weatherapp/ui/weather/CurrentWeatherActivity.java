@@ -4,33 +4,37 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.weatherapp.R;
-import com.github.weatherapp.core.AppSettings;
 import com.github.weatherapp.injection.component.AppComponent;
 import com.github.weatherapp.injection.scope.ActivityScope;
 import com.github.weatherapp.ui.base.BaseActivity;
 import com.github.weatherapp.ui.settings.SettingsActivity;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.OnEditorAction;
 import butterknife.Unbinder;
 
 public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherMvpView, CurrentWeatherMvpPresenter> implements CurrentWeatherMvpView {
     private static final String TAG = CurrentWeatherActivity.class.getSimpleName();
 
-    private EditText cityEditText;
-    private TextView cityNameTextView;
-    private TextView temperatureTextView;
+    @BindView(R.id.edit_text_city)
+    EditText cityEditText;
+
+    @BindView(R.id.text_city_name)
+    TextView cityNameTextView;
+
+    @BindView(R.id.text_temperature)
+    TextView temperatureTextView;
 
     private Component component;
 
@@ -48,7 +52,7 @@ public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherMvpView, 
 
     @Override
     public void updateErrorMessage(String message) {
-        new AlertDialog.Builder(CurrentWeatherActivity.this)
+        new AlertDialog.Builder(this)
                 .setTitle("Oops!")
                 .setMessage("Something went wrong...")
                 .show();
@@ -60,7 +64,6 @@ public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherMvpView, 
         setContentView(R.layout.activity_main);
 
         unbinder = ButterKnife.bind(this);
-        initViews();
     }
 
     @Override
@@ -96,38 +99,18 @@ public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherMvpView, 
         return this;
     }
 
-    private void initViews() {
-        cityEditText = (EditText) findViewById(R.id.edit_text_city);
-        cityNameTextView = (TextView) findViewById(R.id.text_city_name);
-        temperatureTextView = (TextView) findViewById(R.id.text_temperature);
-        ImageButton searchButton = (ImageButton) findViewById(R.id.button_search);
-
-        cityEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                return onEditorActionCityEditText(i);
-            }
-        });
-
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickSearchButton();
-            }
-        });
-    }
-
-    private boolean onEditorActionCityEditText(int actionId) {
+    @OnEditorAction(R.id.edit_text_city)
+    boolean onEditorActionCityEditText(int actionId) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            String unit = component.appSettings().getMetricUnit();
-            presenter.showCurrentForecast(cityEditText.getText().toString(), unit);
+            presenter.showCurrentForecast(cityEditText.getText().toString());
             return true;
         }
         return false;
     }
 
-    private void onClickSearchButton() {
-        presenter.showCurrentForecast(cityEditText.getText().toString(), "metric");
+    @OnClick(R.id.button_search)
+    void onClickSearchButton() {
+        presenter.showCurrentForecast(cityEditText.getText().toString());
     }
 
     private Component getComponent() {
@@ -143,7 +126,5 @@ public class CurrentWeatherActivity extends BaseActivity<CurrentWeatherMvpView, 
     @dagger.Component(dependencies = AppComponent.class)
     public interface Component {
         CurrentWeatherMvpPresenter presenter();
-
-        AppSettings appSettings();
     }
 }

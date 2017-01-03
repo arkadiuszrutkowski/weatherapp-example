@@ -8,14 +8,11 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import butterknife.ButterKnife
-import butterknife.Unbinder
+import butterknife.*
 import com.bumptech.glide.Glide
 import com.github.weatherapp.R
-import com.github.weatherapp.core.AppSettings
 import com.github.weatherapp.injection.component.AppComponent
 import com.github.weatherapp.injection.scope.ActivityScope
 import com.github.weatherapp.ui.base.BaseActivity
@@ -23,9 +20,14 @@ import com.github.weatherapp.ui.settings.SettingsActivity
 
 class CurrentWeatherActivity : BaseActivity<CurrentWeatherMvpView, CurrentWeatherMvpPresenter>(), CurrentWeatherMvpView {
 
-    private var cityEditText: EditText? = null
-    private var cityNameTextView: TextView? = null
-    private var temperatureTextView: TextView? = null
+    @BindView(R.id.edit_text_city)
+    internal lateinit var cityEditText: EditText
+
+    @BindView(R.id.text_city_name)
+    internal lateinit var cityNameTextView: TextView
+
+    @BindView(R.id.text_temperature)
+    internal lateinit var temperatureTextView: TextView
 
     private val component: Component by lazy {
         DaggerCurrentWeatherActivity_Component.builder()
@@ -33,19 +35,19 @@ class CurrentWeatherActivity : BaseActivity<CurrentWeatherMvpView, CurrentWeathe
                 .build()
     }
 
-    private var unbinder: Unbinder? = null
+    private lateinit var unbinder: Unbinder
 
     override fun updateCurrentForecast(model: CurrentWeatherViewModel) {
         Log.d(TAG, model.toString())
-        cityNameTextView!!.text = model.cityName
-        temperatureTextView!!.text = model.temperature
+        cityNameTextView.text = model.cityName
+        temperatureTextView.text = model.temperature
         Glide.with(this)
                 .load(model.weatherIconPath)
                 .into(findViewById(R.id.image_weather_icon) as ImageView)
     }
 
     override fun updateErrorMessage(message: String) {
-        AlertDialog.Builder(this@CurrentWeatherActivity)
+        AlertDialog.Builder(this)
                 .setTitle("Oops!")
                 .setMessage("Something went wrong...")
                 .show()
@@ -56,11 +58,10 @@ class CurrentWeatherActivity : BaseActivity<CurrentWeatherMvpView, CurrentWeathe
         setContentView(R.layout.activity_main)
 
         unbinder = ButterKnife.bind(this)
-        initViews()
     }
 
     override fun onDestroy() {
-        unbinder!!.unbind()
+        unbinder.unbind()
         super.onDestroy()
     }
 
@@ -84,36 +85,24 @@ class CurrentWeatherActivity : BaseActivity<CurrentWeatherMvpView, CurrentWeathe
     override val presenterView: CurrentWeatherMvpView
         get() = this
 
-    private fun initViews() {
-        cityEditText = findViewById(R.id.edit_text_city) as EditText
-        cityNameTextView = findViewById(R.id.text_city_name) as TextView
-        temperatureTextView = findViewById(R.id.text_temperature) as TextView
-        val searchButton = findViewById(R.id.button_search) as ImageButton
-
-        cityEditText!!.setOnEditorActionListener { textView, i, keyEvent -> onEditorActionCityEditText(i) }
-
-        searchButton.setOnClickListener { onClickSearchButton() }
-    }
-
-    private fun onEditorActionCityEditText(actionId: Int): Boolean {
+    @OnEditorAction(R.id.edit_text_city)
+    fun onEditorActionCityEditText(actionId: Int): Boolean {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            val unit = component.appSettings().metricUnit
-            presenter.showCurrentForecast(cityEditText!!.text.toString(), unit)
+            presenter.showCurrentForecast(cityEditText.text.toString())
             return true
         }
         return false
     }
 
-    private fun onClickSearchButton() {
-        presenter.showCurrentForecast(cityEditText!!.text.toString(), "metric")
+    @OnClick(R.id.button_search)
+    fun onClickSearchButton() {
+        presenter.showCurrentForecast(cityEditText.text.toString())
     }
 
     @ActivityScope
     @dagger.Component(dependencies = arrayOf(AppComponent::class))
     interface Component {
         fun presenter(): CurrentWeatherMvpPresenter
-
-        fun appSettings(): AppSettings
     }
 
     companion object {

@@ -18,7 +18,7 @@ constructor(private val appSettings: AppSettings, private val resourceProvider: 
     }
 
     fun updateMetricUnit(unit: String) {
-        appSettings.saveMetricUnit(unit)
+        appSettings.metricUnit = unit
         showAppSettings()
     }
 }

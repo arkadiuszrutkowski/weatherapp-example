@@ -10,13 +10,14 @@ import com.github.weatherapp.injection.scope.ActivityScope
 import com.github.weatherapp.ui.base.BaseActivity
 
 class SettingsActivity : BaseActivity<SettingsMvpView, SettingsMvpPresenter>(), SettingsMvpView {
+
     @BindView(R.id.summary_temperature_unit)
-    lateinit var temperatureUnitTextView: TextView
+    internal lateinit var temperatureUnitTextView: TextView
 
     @BindArray(R.array.temperature_unit_values)
-    lateinit var temperatureUnitValues: Array<String>
+    internal lateinit var temperatureUnitValues: Array<String>
 
-    private var unbinder: Unbinder? = null
+    private lateinit var unbinder: Unbinder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +29,7 @@ class SettingsActivity : BaseActivity<SettingsMvpView, SettingsMvpPresenter>(), 
     }
 
     override fun onDestroy() {
-        unbinder!!.unbind()
+        unbinder.unbind()
         super.onDestroy()
     }
 
